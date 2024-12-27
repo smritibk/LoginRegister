@@ -11,8 +11,13 @@ import {
 } from "@mui/material";
 import * as Yup from "yup";
 import { loginUserValidationSchema } from "@/validation-schema/login.user.validation.schema";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Login = () => {
+  const router = useRouter();
+
   return (
     <Box>
       <Formik
@@ -21,16 +26,28 @@ const Login = () => {
           password: "",
         }}
         validationSchema={loginUserValidationSchema}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={async (values) => {
+          try {
+            const response = await axios.post(
+              "http://localhost:8080/user/login",
+              values
+            );
+
+            localStorage.setItem("token", response?.data?.accessToken);
+            localStorage.setItem(
+              "firstName",
+              response?.data?.userDetails?.firstName
+            );
+            localStorage.setItem("role", response?.data?.userDetails?.role);
+            router.push("/");
+          } catch (err) {
+            console.log(err);
+          }
         }}
       >
         {(formik) => {
           return (
-            <form
-              onSubmit={formik.handleSubmit}
-              className="flex flex-col max-w-[400px] shadow-2xl justify-between p-8 items-center shadow-black rounded-2xl"
-            >
+            <form onSubmit={formik.handleSubmit} className="auth-form">
               <p className="text-red-950 text-2xl">Sign in</p>
               //? email
               <FormControl fullWidth>
@@ -63,6 +80,11 @@ const Login = () => {
               >
                 signUp
               </Button>
+              <div>
+                <Link href="/register" className="text-red-950">
+                  New here? Register
+                </Link>
+              </div>
             </form>
           );
         }}
