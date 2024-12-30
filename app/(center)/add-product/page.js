@@ -18,21 +18,19 @@ import {
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { Formik } from "formik";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const AddProduct = () => {
-  const token = window.localStorage.getItem("token");
+  const router = useRouter();
+
   const { isPending, error, mutate } = useMutation({
     mutationKey: ["add-product"],
     mutationFn: async (values) => {
-      return await $axios.post("/product/add", values, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      return await $axios.post("/product/add", values);
     },
     onSuccess: (res) => {
-      console.log(res);
+      router.push("/");
     },
     onError: (error) => {
       console.log(error);

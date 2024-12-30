@@ -33,12 +33,15 @@ const Login = () => {
               values
             );
 
-            localStorage.setItem("token", response?.data?.accessToken);
-            localStorage.setItem(
+            window.localStorage.setItem("token", response?.data?.accessToken);
+            window.localStorage.setItem(
               "firstName",
               response?.data?.userDetails?.firstName
             );
-            localStorage.setItem("role", response?.data?.userDetails?.role);
+            window.localStorage.setItem(
+              "role",
+              response?.data?.userDetails?.role
+            );
             router.push("/");
           } catch (err) {
             console.log(err);
@@ -51,11 +54,7 @@ const Login = () => {
               <p className="text-red-950 text-2xl">Sign in</p>
               //? email
               <FormControl fullWidth>
-                <TextField
-                  label="Email"
-                  className="text-gray-300"
-                  {...formik.getFieldProps("email")}
-                />
+                <TextField label="Email" {...formik.getFieldProps("email")} />
                 {formik.touched.email && formik.errors.email ? (
                   <FormHelperText>{formik.errors.email}</FormHelperText>
                 ) : null}
@@ -64,7 +63,6 @@ const Login = () => {
               <FormControl fullWidth>
                 <TextField
                   label="Password"
-                  className="text-gray-300 mb-4"
                   {...formik.getFieldProps("password")}
                 />
                 {formik.touched.password && formik.errors.password ? (

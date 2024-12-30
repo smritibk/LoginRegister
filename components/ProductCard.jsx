@@ -25,12 +25,16 @@ const ProductCard = () => {
         }}
       >
         <Stack direction="row" justifyContent="space-between">
-          <Typography variant="h5">Book</Typography>
-          <Chip label="Sajha" color="success" variant="outlined" />
-          <Typography variant="h5">$400</Typography>
+          <Typography variant="h5" color="black">
+            Book
+          </Typography>
+          <Chip label="Penguin Books" color="success" variant="outlined" />
+          <Typography variant="h5" color="black">
+            $400
+          </Typography>
         </Stack>
 
-        <Typography sx={{ textAlign: "justify", color:"blackn" }}>
+        <Typography sx={{ textAlign: "justify", color: "black" }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, culpa
           sapiente. Quia, alias rerum itaque temporibus eum corrupti tempore
           corporis aut hic cum assumenda officia exercitationem deserunt modi.

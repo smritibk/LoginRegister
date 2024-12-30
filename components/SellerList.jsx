@@ -1,11 +1,25 @@
-import React from "react";
-import ProductCard from "./ProductCard";
+"use-client";
+
+import $axios from "@/lib/axios/axios.instance";
+
+import React, { useEffect } from "react";
 
 const SellerList = () => {
-  return(<div>
-     (<ProductCard />
-      <div className="text-red-950">SellerList</div>)
-  </div>)
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const res = await $axios.post("/product/seller/list", {
+          page: 1,
+          limit: 10,
+        });
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProducts();
+  }, []);
+  return <div>SellerList</div>;
 };
 
 export default SellerList;
